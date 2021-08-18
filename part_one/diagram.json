@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "author": "Jasper Robison",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": 70, "left": 20, "attrs": {} },
+    { "type": "wokwi-ssd1306", "id": "ssd1306", "top": 300, "left": 100, "attrs": {} },
+    {
+      "type": "wokwi-membrane-keypad",
+      "id": "keypad",
+      "top": -313.71,
+      "left": 86.54,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "uno:GND.2", "ssd1306:GND", "black", [ "v12", "*", "h0" ] ],
+    [ "uno:5V", "ssd1306:VIN", "red", [ "v16", "*", "h0" ] ],
+    [ "uno:A4", "ssd1306:DATA", "blue", [ "v20", "*", "h0" ] ],
+    [ "uno:A5", "ssd1306:CLK", "purple", [ "v24", "*", "h0" ] ],
+    [ "uno:GND.1", "lcd:VSS", "black", [ "v-51", "*", "h0", "v18" ] ],
+    [ "uno:GND.1", "lcd:K", "black", [ "v-51", "*", "h0", "v18" ] ],
+    [ "uno:GND.1", "lcd:RW", "black", [ "v-51", "*", "h0", "v18" ] ],
+    [ "uno:2", "keypad:C4", "brown", [] ],
+    [ "uno:3", "keypad:C3", "gray", [] ],
+    [ "uno:4", "keypad:C2", "orange", [] ],
+    [ "uno:5", "keypad:C1", "pink", [] ],
+    [ "uno:6", "keypad:R4", "blue", [] ],
+    [ "uno:7", "keypad:R3", "green", [] ],
+    [ "uno:8", "keypad:R2", "purple", [ "v-14", "h0" ] ],
+    [ "uno:9", "keypad:R1", "gold", [ "v-18", "h0" ] ]
+  ]
+}
