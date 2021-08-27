@@ -95,6 +95,9 @@ void loop() {
   delay(10);
 }
 
+/*
+Used to compare two char arrays
+*/
 bool isEqual(char x[], char y[], int len) {
   for (int i = 0; i < len; i++) {
     if (!(x[i] == y[i])) {
