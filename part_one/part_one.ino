@@ -25,7 +25,7 @@ char entry[9] = { NULL };
 // Password
 char password1[9] = { "102989198" };
 char password2[9] = { "103073746" };
-char password3[9] = { "102098120"};
+char password3[9] = { "102098120" };
 // Counter
 int i = 0;
 // DEFAULT, It doesn't like an empty char
