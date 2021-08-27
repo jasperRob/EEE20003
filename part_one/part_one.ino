@@ -23,7 +23,9 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 // Storage for current entry
 char entry[9] = { NULL };
 // Password
-char password[8] = { "102989198" };
+char password1[8] = { "102989198" };
+char password2[8] = { "103073746" };
+char password3[8] = { "000000000"};
 // Counter
 int i = 0;
 // DEFAULT, It doesn't like an empty char
@@ -69,7 +71,15 @@ void loop() {
     }
 
     if (entry[8] != NULL) {
-      if (isEqual(entry, password, 9)) {
+      if (isEqual(entry, password1, 9)) {
+        active = false;
+        Serial.println("Match Found!");
+      }
+      if (isEqual(entry, password2, 9)) {
+        active = false;
+        Serial.println("Match Found!");
+      }
+      if (isEqual(entry, password3, 9)) {
         active = false;
         Serial.println("Match Found!");
       }
