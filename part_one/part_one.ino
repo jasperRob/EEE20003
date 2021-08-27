@@ -86,6 +86,10 @@ void loop() {
       else {
         active = false;
         Serial.println("No Match Found.");
+        for( int i = 0; i < sizeof(entry);  ++i )   // this is an attempt to inpout multiple passwords in succession without restarting 
+            entry[i] = (char)NULL;                  // However, it does reset the entry array, but you have to push 8 times for it to say "starting up again"
+            active = true;                          // After that, you can easily input another set of digits for a password, just the little blank is the issue. 
+      }
       }
     }
     
