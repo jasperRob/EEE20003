@@ -75,11 +75,11 @@ void loop() {
         active = false;
         Serial.println("Welcome Jasper!");
       }
-      if (isEqual(entry, password2, 9)) {
+      else if (isEqual(entry, password2, 9)) {
         active = false;
         Serial.println("Welcome Joel!");
       }
-      if (isEqual(entry, password3, 9)) {
+      else if (isEqual(entry, password3, 9)) {
         active = false;
         Serial.println("Welcome Jack!");
       }
