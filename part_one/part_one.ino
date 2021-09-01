@@ -4,7 +4,7 @@
 #include <Adafruit_SSD1306.h>
 #include <Keypad.h>
 
-Adafruit_SSD1306 display = Adafruit_SSD1306(128, 32, &Wire);
+Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire);
 
 const uint8_t ROWS = 4;
 const uint8_t COLS = 4;
@@ -27,16 +27,16 @@ char password1[9] = { "102989198" };
 char password2[9] = { "103073746" };
 char password3[9] = { "102098120" };
 // Counter
-int i = 0;
+int counter = 0;
 // DEFAULT, It doesn't like an empty char
 char key = '_';
 // Bool to signify active recording of keypresses
 bool active = true;
+String msg = "";
 
 void setup() {
   // Begin
   Serial.begin(9600);
-  Serial.println("Starting Up!");
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.display();
   delay(100);
@@ -48,10 +48,10 @@ void setup() {
   // Set Defaults for text
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
+  Serial.println("Finished Starting Up! Provide a Password...");
 }
 
 void loop() {
-
 
   // Clear Display
   display.clearDisplay();
@@ -65,38 +65,51 @@ void loop() {
 
     if (new_key != NO_KEY) {
       key = new_key;
-      entry[i] = key;
-      i++;
+      entry[counter] = key;
+      counter++;
       Serial.println(entry);
+      msg = "";
     }
 
     if (entry[8] != NULL) {
       if (isEqual(entry, password1, 9)) {
         active = false;
-        Serial.println("Welcome Jasper!");
+        msg = "Welcome Jasper!";
       }
       else if (isEqual(entry, password2, 9)) {
         active = false;
-        Serial.println("Welcome Joel!");
+        msg = "Welcome Joel!";
       }
       else if (isEqual(entry, password3, 9)) {
         active = false;
-        Serial.println("Welcome Jack!");
+        msg = "Welcome Jack!";
       }
       else {
-        active = false;
-        Serial.println("No Match Found.");
-        for( int i = 0; i < sizeof(entry);  ++i )   // this is an attempt to inpout multiple passwords in succession without restarting 
-            entry[i] = (char)NULL;                  // However, it does reset the entry array, but you have to push 8 times for it to say "starting up again"
-            active = true;                          // After that, you can easily input another set of digits for a password, just the little blank is the issue. 
+        msg = "No Match Found.";
+        /* 
+        this is an attempt to input multiple passwords in succession without restarting
+        However, it does reset the entry array, but you have to push 8 times for it to say "starting up again"
+        After that, you can easily input another set of digits for a password, just the little blank is the issue. 
+        */
+        for (int i = 0; i < sizeof(entry); i++) {
+          entry[i] = (char)NULL;
+        }
+        active = true;
+        counter = 0;
       }
-      }
+      Serial.println(msg);
     }
-    
   }
-
+  // Print Text
+  display.setCursor(1, 1);
+  display.print("Password:");
   // Print Current entry
+  display.setCursor(1, 14);
   display.print(entry);
+  // Print Message
+  display.setCursor(1, 28);
+  display.print(msg);
+  // Send to Display
   yield();
   display.display();
   // Delay 10 millis
