@@ -121,6 +121,7 @@ void loop() {
 /*
 Used to compare two char arrays
 */
+// compares two different arrays and see if they are equal - J.F
 bool isEqual(char x[], char y[], int len) {
   for (int i = 0; i < len; i++) {
     if (!(x[i] == y[i])) {
