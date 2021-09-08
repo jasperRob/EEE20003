@@ -1,3 +1,4 @@
+// Include necessary libraries
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -6,6 +7,7 @@
 
 Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire);
 
+// Define keys for keypad
 const uint8_t ROWS = 4;
 const uint8_t COLS = 4;
 char keys[ROWS][COLS] = {
