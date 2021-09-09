@@ -36,6 +36,10 @@ char key = '_';
 bool active = true;
 String msg = "";
 
+// Bools for handling symbols
+bool denied = false;
+bool granted = false;
+
 void setup() {
   // Begin
   Serial.begin(9600);
@@ -71,23 +75,29 @@ void loop() {
       counter++;
       Serial.println(entry);
       msg = "";
+      denied = false;
+      granted = false;
     }
 
     if (entry[8] != NULL) {
       if (isEqual(entry, password1, 9)) {
         active = false;
+        granted = true;
         msg = "Welcome Jasper!";
       }
       else if (isEqual(entry, password2, 9)) {
         active = false;
+        granted = true;
         msg = "Welcome Joel!";
       }
       else if (isEqual(entry, password3, 9)) {
         active = false;
+        granted = true;
         msg = "Welcome Jack!";
       }
       else {
         msg = "No Match Found.";
+        denied = true;
         /* 
         this is an attempt to input multiple passwords in succession without restarting
         However, it does reset the entry array, but you have to push 8 times for it to say "starting up again"
@@ -111,6 +121,16 @@ void loop() {
   // Print Message
   display.setCursor(1, 28);
   display.print(msg);
+  // Draw Cross if Denied
+  if (denied) {
+    display.drawLine(96, 32, 120, 8, WHITE);
+    display.drawLine(120, 32, 96, 8, WHITE);
+  }
+  // Draw Tick if Granted
+  if (granted) {
+    display.drawLine(96, 23, 105, 30, WHITE);
+    display.drawLine(105, 30, 120, 6, WHITE);
+  }
   // Send to Display
   yield();
   display.display();
