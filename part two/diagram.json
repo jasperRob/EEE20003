@@ -1,1 +1,24 @@
-
+{
+  "version": 1,
+  "author": " Jasper Robison / Jack Fuhrer / Joel murphy ",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-mega", "id": "mega", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-ssd1306", "id": "oled1", "top": 214.67, "left": 252.66, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 250,
+      "left": 154.67,
+      "attrs": { "color": "green" }
+    }
+  ],
+  "connections": [
+    [ "oled1:VIN", "mega:5V.2", "red", [ "v-40", "h-103" ] ],
+    [ "oled1:CLK", "mega:21", "green", [ "v-79", "h-13" ] ],
+    [ "oled1:GND", "mega:GND.5", "black", [ "v-24", "h10" ] ],
+    [ "oled1:DATA", "mega:20", "green", [ "v-87", "h37" ] ],
+    [ "btn1:1.l", "mega:7", "green", [ "h-21", "v-217", "h87" ] ],
+    [ "btn1:2.l", "mega:5V", "green", [ "h-18", "v-74", "h61" ] ]
+  ]
+}
