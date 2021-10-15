@@ -11,6 +11,14 @@
       "top": 250,
       "left": 154.67,
       "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 215.34,
+      "left": 200,
+      "rotate": 90,
+      "attrs": {}
     }
   ],
   "connections": [
@@ -18,7 +26,9 @@
     [ "oled1:CLK", "mega:21", "green", [ "v-79", "h-13" ] ],
     [ "oled1:GND", "mega:GND.5", "black", [ "v-24", "h10" ] ],
     [ "oled1:DATA", "mega:20", "green", [ "v-87", "h37" ] ],
-    [ "btn1:1.l", "mega:7", "green", [ "h-21", "v-217", "h87" ] ],
-    [ "btn1:2.l", "mega:5V", "green", [ "h-18", "v-74", "h61" ] ]
+    [ "btn1:2.l", "mega:5V", "green", [ "h-18", "v-74", "h61" ] ],
+    [ "btn1:1.l", "mega:2", "green", [ "h-0.5", "v-23.26", "h76.67" ] ],
+    [ "btn1:1.r", "r1:2", "green", [ "v0" ] ],
+    [ "r1:1", "mega:GND.3", "green", [ "h0" ] ]
   ]
 }
