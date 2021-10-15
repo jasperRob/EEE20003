@@ -5,7 +5,8 @@
 #include <Adafruit_SSD1306.h>
 
 Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire);
-
+// debounce
+long debounce = millis();
 // Storage for current entry
 char entry[9] = { NULL };
 // Password
@@ -39,7 +40,7 @@ void setup() {
   
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.display();
-  attachInterrupt(digitalPinToInterrupt(2), selectChar, RISING);
+  attachInterrupt(digitalPinToInterrupt(19), selectChar, RISING);
   delay(100);
 
   // Clear The Bootloader Screen
@@ -136,9 +137,14 @@ void loop() {
 }
 
 void selectChar() {
-  entry[counter] = hover;
+  if (millis() - debounce > 100){
+    // print entry
+  entry[counter] = char(hover);
   counter++;
+  debounce = millis();
+  }
 }
+
 
 /*
 Used to compare two char arrays
