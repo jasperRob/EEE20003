@@ -30,6 +30,13 @@ long lastChange = millis();
 void setup() {
   // Begin
   Serial.begin(9600);
+  
+  // Save to EEPROM
+  EEPROM.write(0, "EEE20003");
+  EEPROM.write(8, 102989198);
+  EEPROM.write(9, 103073746);
+  EEPROM.write(10, 102098120);
+  
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.display();
   attachInterrupt(digitalPinToInterrupt(2), selectChar, RISING);
@@ -65,17 +72,21 @@ void loop() {
   if (active) {
 
     if (entry[8] != NULL) {
-      if (isEqual(entry, password1, 9)) {
+      
+      String entryString(entry);
+      int entryInt = entryString.toInt();
+
+      if (entryInt == EEPROM.read(8)) {
         active = false;
         granted = true;
         msg = "Welcome Jasper!";
       }
-      else if (isEqual(entry, password2, 9)) {
+      else if (entryInt == EEPROM.read(9)) {
         active = false;
         granted = true;
         msg = "Welcome Joel!";
       }
-      else if (isEqual(entry, password3, 9)) {
+      else if (entryInt == EEPROM.read(10)) {
         active = false;
         granted = true;
         msg = "Welcome Jack!";
