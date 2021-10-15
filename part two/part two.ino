@@ -141,3 +141,28 @@ bool isEqual(char x[], char y[], int len) {
   }
   return true;
 }
+
+void menu(){ // menu function from serial monitor to select the 3 option choices 
+    int dec;
+    Serial.println("Option 1 - Change 3 members passcodes. ");
+    Serial.println("Option 2 - [D/HD] The data from the additional sensor. ");
+    Serial.println("Option 3 - Interrupt-driven programming. ");
+    while(Serial.available() == 0){ // Wait for User to Input Data
+    }
+    dec = Serial.parseInt();
+    switch(dec){
+      case 1:
+        //function 1
+        break;
+      case 2:
+        //function 2
+        break;
+     case 3:
+        //function 3
+        break;\
+    default:
+        //something 
+        break;
+    }
+  }
+    
