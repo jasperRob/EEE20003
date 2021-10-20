@@ -76,6 +76,7 @@ void loop() {
 
     if (entry[8] != NULL) {
 
+      // First position integer stores total number of saved passwords
       int numPasswords = EEPROM.read(0);
 
       for (int i = 0; i < numPasswords; i++) {
