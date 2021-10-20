@@ -84,7 +84,7 @@ void loop() {
         int pos = (i+1) * 9;
         readFromEEPROM(pos, pw, 9);
 
-        if (isEqual(entry, pw, 8)) {
+        if (isEqual(entry, pw, 9)) {
           active = false;
           granted = true;
           msg = "Welcome Person!";
