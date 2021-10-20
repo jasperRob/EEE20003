@@ -3,16 +3,13 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <EEPROM.h>
 
 Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire);
 // debounce
 long debounce = millis();
 // Storage for current entry
 char entry[9] = { NULL };
-// Password
-char password1[9] = { "102989198" };
-char password2[9] = { "103073746" };
-char password3[9] = { "102098120" };
 // Counter
 int counter = 0;
 // DEFAULT, It doesn't like an empty char
@@ -34,9 +31,9 @@ void setup() {
   
   // Save to EEPROM
   EEPROM.write(0, "EEE20003");
-  EEPROM.write(8, 102989198);
-  EEPROM.write(9, 103073746);
-  EEPROM.write(10, 102098120);
+  EEPROM.write(8, "102989198");
+  EEPROM.write(17, "103073746");
+  EEPROM.write(26, "102098120");
   
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.display();
@@ -73,21 +70,18 @@ void loop() {
   if (active) {
 
     if (entry[8] != NULL) {
-      
-      String entryString(entry);
-      int entryInt = entryString.toInt();
 
-      if (entryInt == EEPROM.read(8)) {
+      if (entry == EEPROM.read(8)) {
         active = false;
         granted = true;
         msg = "Welcome Jasper!";
       }
-      else if (entryInt == EEPROM.read(9)) {
+      else if (entry == EEPROM.read(9)) {
         active = false;
         granted = true;
         msg = "Welcome Joel!";
       }
-      else if (entryInt == EEPROM.read(10)) {
+      else if (entry == EEPROM.read(10)) {
         active = false;
         granted = true;
         msg = "Welcome Jack!";
@@ -138,10 +132,15 @@ void loop() {
 
 void selectChar() {
   if (millis() - debounce > 100){
+    // This converts it to an ascii char
+    char c = (char) (hover + 48);
+    Serial.println(c);
     // print entry
-  entry[counter] = char(hover);
-  counter++;
-  debounce = millis();
+    if (counter < 9) {
+      entry[counter] = c;
+      counter++;
+    }
+    debounce = millis();
   }
 }
 
@@ -176,10 +175,10 @@ void menu(){ // menu function from serial monitor to select the 3 option choices
         break;
      case 3:
         //function 3
-        break;\
+        break;
     default:
         //something 
         break;
     }
   }
-    
+  
