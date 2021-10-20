@@ -10,6 +10,7 @@ Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire);
 long debounce = millis();
 // Storage for current entry
 char entry[9] = { NULL };
+
 // Counter
 int counter = 0;
 // DEFAULT, It doesn't like an empty char
@@ -25,15 +26,19 @@ bool granted = false;
 int hover = 0;
 long lastChange = millis();
 
+
 void setup() {
   // Begin
   Serial.begin(9600);
   
-  // Save to EEPROM
-  EEPROM.write(0, "EEE20003");
-  EEPROM.write(8, "102989198");
-  EEPROM.write(17, "103073746");
-  EEPROM.write(26, "102098120");
+  // Save to EEPROM (pos, item, length)
+  writeToEEPROM(1, "EEE20003", 8);
+  writeToEEPROM(9, "102989198", 9);
+  writeToEEPROM(18, "103073746", 9);
+  writeToEEPROM(27, "102098120", 9);
+
+  // Save total num passwords in eeprom. max of 9
+  EEPROM.write(0, 3);
   
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.display();
@@ -71,22 +76,21 @@ void loop() {
 
     if (entry[8] != NULL) {
 
-      if (entry == EEPROM.read(8)) {
-        active = false;
-        granted = true;
-        msg = "Welcome Jasper!";
+      int numPasswords = EEPROM.read(0);
+
+      for (int i = 0; i < numPasswords; i++) {
+        char pw[9];
+        int pos = (i+1) * 9;
+        readFromEEPROM(pos, pw, 9);
+
+        if (isEqual(entry, pw, 8)) {
+          active = false;
+          granted = true;
+          msg = "Welcome Person!";
+        }
       }
-      else if (entry == EEPROM.read(9)) {
-        active = false;
-        granted = true;
-        msg = "Welcome Joel!";
-      }
-      else if (entry == EEPROM.read(10)) {
-        active = false;
-        granted = true;
-        msg = "Welcome Jack!";
-      }
-      else {
+
+      if (!granted) {
         msg = "No Match Found.";
         denied = true;
         /* 
@@ -156,6 +160,35 @@ bool isEqual(char x[], char y[], int len) {
     }
   }
   return true;
+}
+
+/*
+Used to write a char array to EEPROM
+
+param p   the position to write to
+param c   the char array to write
+param length   the length of the array
+*/
+void writeToEEPROM(int p, char* c, int length)
+{
+  for (int i = 0; i < length; i++) {
+    EEPROM.write(p+i, c[i]);
+  }
+}
+
+/*
+Used to read a char array to EEPROM
+
+param p   the position to read from
+param c   the char array to read data into
+param length   the length of the array
+*/
+void readFromEEPROM(int p, char* c, int length)
+{
+  for (int i = 0; i < length; i++) {
+    char cha = (char) EEPROM.read(p+i);
+    c[i] = cha;
+  }
 }
 
 void menu(){ // menu function from serial monitor to select the 3 option choices 
