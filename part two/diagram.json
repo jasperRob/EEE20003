@@ -27,8 +27,8 @@
     [ "oled1:GND", "mega:GND.5", "black", [ "v-24", "h10" ] ],
     [ "oled1:DATA", "mega:20", "green", [ "v-87", "h37" ] ],
     [ "btn1:2.l", "mega:5V", "green", [ "h-18", "v-74", "h61" ] ],
-    [ "btn1:1.l", "mega:2", "green", [ "h-0.5", "v-23.26", "h76.67" ] ],
     [ "btn1:1.r", "r1:2", "green", [ "v0" ] ],
-    [ "r1:1", "mega:GND.3", "green", [ "h0" ] ]
+    [ "r1:1", "mega:GND.3", "green", [ "h0" ] ],
+    [ "btn1:1.l", "mega:19", "green", [ "h-1.84", "v-206.59", "h164" ] ]
   ]
 }
