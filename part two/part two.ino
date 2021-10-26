@@ -32,10 +32,10 @@ void setup() {
   Serial.begin(9600);
   
   // Save to EEPROM (pos, item, length)
-  writeToEEPROM(1, "EEE20003", 8);
-  writeToEEPROM(9, "102989198", 9);
-  writeToEEPROM(18, "103073746", 9);
-  writeToEEPROM(27, "102098120", 9);
+  writeToEEPROM(1, "EEE20003", 8); // DEFAULT 
+  writeToEEPROM(9, "102989198", 9); // JASPER
+  writeToEEPROM(18, "103073746", 9); // JOEL
+  writeToEEPROM(27, "102098120", 9); // JACK
 
   // Save total num passwords in eeprom. max of 9
   EEPROM.write(0, 3);
