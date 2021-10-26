@@ -56,7 +56,7 @@ void setup() {
   menu();
 }
 
-vvoid loop() {
+void loop() {
 
   char c = (char) (hover + 48);
 
