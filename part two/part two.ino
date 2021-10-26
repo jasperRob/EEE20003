@@ -234,9 +234,9 @@ void changePassword(int pos){
   message.toCharArray(char_array, msg_len);  // convert message into char array with length
   for (int i = 0; i<sizeof(char_array); i++)    // refering to Wk5 lab notes
   {
-    Serial.print(char_array[i]); //display each 
+    Serial.print(char_array[i]); //display each DELETE THIS FOR LOOP DURING DEMOSTRATION 
   }
-  Serial.println(msg_len);
+  Serial.println(msg_len); // DELETE THIS DURING DEMO
   }
   writeToEEPROM(dec,char_array,9);
 }
