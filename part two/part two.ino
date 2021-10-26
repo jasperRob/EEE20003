@@ -52,7 +52,8 @@ void setup() {
   // Set Defaults for text
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
-  Serial.println("Finished Starting Up! Provide a Password...");
+  
+  menu();
 }
 
 vvoid loop() {
