@@ -205,22 +205,24 @@ void readFromEEPROM(int p, char* c, int length)
 
 void changePassword(int pos){
   String message; //string from serial 
-  int msg_len;    //total length of string
+  int msg_len ;    //total length of string
+  char char_array[9];   // char array made from length of message
   int dec; // user address in the EEPROM
   switch(pos){
-      case 1:
+    case 1:
         dec = 9;
         break;
-      case 2:
+    case 2:
         dec = 18;
         break;
-     case 3:
+    case 3:
         dec = 27;
         break;
     default:
         Serial.println("Please Select a user from 1-3.");
         break;
     } 
+  while (msg_len != 10){
   Serial.print("Please enter a 9 alphanumeric length passcode to change User: ");
   Serial.println(pos);
   do {                    // do while used to read strings instead of  parseInt()
@@ -234,10 +236,9 @@ void changePassword(int pos){
   {
     Serial.print(char_array[i]); //display each 
   }
+  Serial.println(msg_len);
+  }
   writeToEEPROM(dec,char_array,9);
-  char pw[9];
-  readFromEEPROM(dec,pw , 9);
-  Serial.println(pw);
 }
 
 void menu(){ // menu function from serial monitor to select the 3 option choices 
@@ -277,18 +278,20 @@ void menu(){ // menu function from serial monitor to select the 3 option choices
     dec = Serial.parseInt();
     switch(dec){
       case 1:
-        String choice;
+        String choice;       
+        while (Serial.read() >= 0); // do nothing
         Serial.println("Please select which user passcode to change (1-3) ");
         while (Serial.available() == 0 ) { // wait for input
         }
         choice =  Serial.readStringUntil('\n'); // read string until meet newline character 
-        if(choice == 1){
+        Serial.println(choice);
+        if(choice == "1"){
           changePassword(1);
         }
-        else if (choice == 2){
+        else if (choice == "2"){
           changePassword(2);
         }
-        else if (choice == 3){
+        else if (choice == "3"){
           changePassword(3);
         }
         else{
