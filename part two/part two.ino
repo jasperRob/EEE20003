@@ -55,24 +55,29 @@ void setup() {
   Serial.println("Finished Starting Up! Provide a Password...");
 }
 
-void loop() {
-  
-  // start menu
-  menu();
+vvoid loop() {
+
+  char c = (char) (hover + 48);
+
+  // Increment hover var
+  if (millis() - lastChange > 5000){
+    lastChange = millis();
+
+    char c = (char) (hover + 48);
+    Serial.println(c);
+    // print entry
+    if (counter < 9) {
+      entry[counter] = c;
+      counter++;
+    }
+
+    // Reset hover var
+    hover = 0;
+  }
 
   // Clear Display
   display.clearDisplay();
   display.setCursor(0,0);
-
-  // Increment hover var
-  if (millis() - lastChange > 1000) {
-    if (hover == 9) {
-      hover = 0;
-    } else {
-      hover++;
-    }
-    lastChange = millis();
-  }
 
   // Only add to entry if active
   if (active) {
@@ -113,11 +118,13 @@ void loop() {
   }
   // Print Text
   display.setCursor(1, 1);
-  display.print("New Char: ");
-  display.print(hover);
+  display.print("Updating in : ");
+  int timeLeft = ((5000 - (millis() - lastChange)) / 1000) + 1;
+  display.print(timeLeft);
   // Print Current entry
   display.setCursor(1, 14);
   display.print(entry);
+  display.print(c);
   // Print Message
   display.setCursor(1, 28);
   display.print(msg);
@@ -140,15 +147,15 @@ void loop() {
 
 void selectChar() {
   if (millis() - debounce > 100){
-    // This converts it to an ascii char
-    char c = (char) (hover + 48);
-    Serial.println(c);
-    // print entry
-    if (counter < 9) {
-      entry[counter] = c;
-      counter++;
-    }
     debounce = millis();
+
+    if (hover < 9) {
+      hover++;
+    } else {
+      hover = 0;
+    }
+
+    lastChange = millis();
   }
 }
 
@@ -248,14 +255,14 @@ void menu(){ // menu function from serial monitor to select the 3 option choices
     defltpword =  Serial.readStringUntil('\n'); // read string until meet newline character
     
     if (defltpword == pw){
-    Serial.println("Correct Password");
-    break;
+      Serial.println("Correct Password");
+      break;
     }
     else {
-  Serial.println("Incorrect Password");
-  Serial.println("Please try again");
-  delay(200);
-  }
+      Serial.println("Incorrect Password");
+      Serial.println("Please try again");
+      delay(200);
+    }
   }
   
     //main menu
@@ -292,14 +299,16 @@ void menu(){ // menu function from serial monitor to select the 3 option choices
         //function 2
         Serial.println("Additional Sensor");
         break;
-     case 3:
+      case 3:
         //function 3
         Serial.println("Finished Starting Up! Provide a Password...");
         
         break;
-    default:
+      default:
         //something 
         break;
     }
+  
+    lastChange = millis();
   }
 
