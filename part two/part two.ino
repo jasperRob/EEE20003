@@ -195,6 +195,43 @@ void readFromEEPROM(int p, char* c, int length)
   }
 }
 
+void changePassword(int pos){
+  String message; //string from serial 
+  int msg_len;    //total length of string
+  int dec; // user address in the EEPROM
+  switch(pos){
+      case 1:
+        dec = 9;
+        break;
+      case 2:
+        dec = 18;
+        break;
+     case 3:
+        dec = 27;
+        break;
+    default:
+        Serial.println("Please Select a user from 1-3.");
+        break;
+    } 
+  Serial.print("Please enter a 9 alphanumeric length passcode to change User: ");
+  Serial.println(pos);
+  do {                    // do while used to read strings instead of  parseInt()
+    message = Serial.readString();
+  } while (message == ""); // read from serial monitor 
+  Serial.println(message);
+  msg_len = message.length() ; // //total length of string 
+  char char_array[msg_len];   // char array made from length of message
+  message.toCharArray(char_array, msg_len);  // convert message into char array with length
+  for (int i = 0; i<sizeof(char_array); i++)    // refering to Wk5 lab notes
+  {
+    Serial.print(char_array[i]); //display each 
+  }
+  writeToEEPROM(dec,char_array,9);
+  char pw[9];
+  readFromEEPROM(dec,pw , 9);
+  Serial.println(pw);
+}
+
 void menu(){ // menu function from serial monitor to select the 3 option choices 
    
    // variables
@@ -232,8 +269,24 @@ void menu(){ // menu function from serial monitor to select the 3 option choices
     dec = Serial.parseInt();
     switch(dec){
       case 1:
-        //function 1
-        
+        String choice;
+        Serial.println("Please select which user passcode to change (1-3) ");
+        while (Serial.available() == 0 ) { // wait for input
+        }
+        choice =  Serial.readStringUntil('\n'); // read string until meet newline character 
+        if(choice == 1){
+          changePassword(1);
+        }
+        else if (choice == 2){
+          changePassword(2);
+        }
+        else if (choice == 3){
+          changePassword(3);
+        }
+        else{
+          Serial.println("INCORRECT INPUT. Please select 1-3. ");
+          break;
+        }
         break;
       case 2:
         //function 2
