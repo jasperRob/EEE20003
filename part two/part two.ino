@@ -196,8 +196,14 @@ void readFromEEPROM(int p, char* c, int length)
 }
 
 void menu(){ // menu function from serial monitor to select the 3 option choices 
-    String defltpword;
-    char pw[9];
+   
+   // variables
+   String defltpword;
+   char pw[9];
+  
+   // loop to keep asking for correct password
+   while (true){
+   
     readFromEEPROM(1 ,pw , 8);
     Serial.println("Please input default Password");
     while (Serial.available() == 0 ) { // wait for input
@@ -206,6 +212,17 @@ void menu(){ // menu function from serial monitor to select the 3 option choices
     
     if (defltpword == pw){
     Serial.println("Correct Password");
+    break;
+    }
+    else {
+  Serial.println("Incorrect Password");
+  Serial.println("Please try again");
+  delay(200);
+  }
+  }
+  
+    //main menu
+    
     int dec;
     Serial.println("Option 1 - Change 3 members passcodes. ");
     Serial.println("Option 2 - [D/HD] The data from the additional sensor. ");
@@ -216,22 +233,20 @@ void menu(){ // menu function from serial monitor to select the 3 option choices
     switch(dec){
       case 1:
         //function 1
+        
         break;
       case 2:
         //function 2
+        Serial.println("Additional Sensor");
         break;
      case 3:
         //function 3
+        Serial.println("Finished Starting Up! Provide a Password...");
+        
         break;
     default:
         //something 
         break;
     }
   }
-  else {
-  Serial.println("Incorrect Password");
-  Serial.println("Please try again");
-  delay(200);
-  }
-}
 
