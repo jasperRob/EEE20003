@@ -203,43 +203,24 @@ void readFromEEPROM(int p, char* c, int length)
   }
 }
 
-void changePassword(int pos){
+void changePassword(int pos) {
   String message; //string from serial 
   int msg_len ;    //total length of string
   char char_array[9];   // char array made from length of message
-  int dec; // user address in the EEPROM
-  switch(pos){
-    case 1:
-        dec = 9;
-        break;
-    case 2:
-        dec = 18;
-        break;
-    case 3:
-        dec = 27;
-        break;
-    default:
-        Serial.println("Please Select a user from 1-3.");
-        break;
-    } 
   while (msg_len != 10){
-  Serial.print("Please enter a 9 alphanumeric length passcode to change User: ");
-  Serial.println(pos);
-  do {                    // do while used to read strings instead of  parseInt()
-    message = Serial.readString();
-  } while (message == ""); // read from serial monitor 
-  Serial.println(message);
-  msg_len = message.length() ; // //total length of string 
-  char char_array[msg_len];   // char array made from length of message
-  message.toCharArray(char_array, msg_len);  // convert message into char array with length
-  for (int i = 0; i<sizeof(char_array); i++)    // refering to Wk5 lab notes
-  {
-    Serial.print(char_array[i]); //display each DELETE THIS FOR LOOP DURING DEMOSTRATION 
+    Serial.print("Please enter a 9 alphanumeric length passcode to change User: ");
+    Serial.println(pos);
+    do {                    // do while used to read strings instead of  parseInt()
+      message = Serial.readString();
+    } while (message == ""); // read from serial monitor 
+    Serial.println(message);
+    msg_len = message.length() ; // //total length of string 
+    char char_array[msg_len];   // char array made from length of message
+    message.toCharArray(char_array, msg_len);  // convert message into char array with length
+    writeToEEPROM(pos*9,char_array,9);
   }
-  Serial.println(msg_len); // DELETE THIS DURING DEMO
-  }
-  writeToEEPROM(dec,char_array,9);
 }
+
 /* 
   Main menu function from serial monitor to select the 3 option choices 
 */
