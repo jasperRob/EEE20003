@@ -73,7 +73,6 @@ void loop() {
       lastChange = millis();
 
       char c = (char) (hover + 48);
-      Serial.println(c);
       // print entry
       if (counter < 9) {
         entry[counter] = c;
