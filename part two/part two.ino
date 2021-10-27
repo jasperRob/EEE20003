@@ -287,6 +287,12 @@ void menu() {
         }else{
           EEPROM.write(100, 0); // else write 0 into EEPROM to indicate it has not been satisfied.
         }
+        int val = EEPROM.read(100); // READ value from 100 
+        if(val == 1){
+          Serial.println("Added into EEPROM");
+        }else{
+          Serial.println("No value in EEPROM");
+        }
       } else if (dec == 3) {
         Serial.println("Finished Starting Up! Provide a Password...");
         break;
