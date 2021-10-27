@@ -240,8 +240,10 @@ void changePassword(int pos){
   }
   writeToEEPROM(dec,char_array,9);
 }
-
-void menu(){ // menu function from serial monitor to select the 3 option choices 
+/* 
+  Main menu function from serial monitor to select the 3 option choices 
+*/
+void menu(){ 
    
    // variables
    String defltpword;
@@ -267,52 +269,40 @@ void menu(){ // menu function from serial monitor to select the 3 option choices
     }
   }
   
-    //main menu
-    
+  // Display options
+  while (true) {
     int dec;
-    Serial.println("Option 1 - Change 3 members passcodes. ");
-    Serial.println("Option 2 - [D/HD] The data from the additional sensor. ");
-    Serial.println("Option 3 - Interrupt-driven programming. ");
-    while(Serial.available() == 0){ // Wait for User to Input Data
-    }
-    dec = Serial.parseInt();
-    switch(dec){
-      case 1:
-        String choice;       
-        while (Serial.read() >= 0); // do nothing
-        Serial.println("Please select which user passcode to change (1-3) ");
-        while (Serial.available() == 0 ) { // wait for input
-        }
-        choice =  Serial.readStringUntil('\n'); // read string until meet newline character 
-        Serial.println(choice);
-        if(choice == "1"){
-          changePassword(1);
-        }
-        else if (choice == "2"){
-          changePassword(2);
-        }
-        else if (choice == "3"){
-          changePassword(3);
-        }
-        else{
-          Serial.println("INCORRECT INPUT. Please select 1-3. ");
-          break;
-        }
-        break;
-      case 2:
-        //function 2
+      Serial.println("Option 1 - Change 3 members passcodes. ");
+      Serial.println("Option 2 - [D/HD] The data from the additional sensor. ");
+      Serial.println("Option 3 - Interrupt-driven programming. ");
+      // Wait for User to Input Data
+      while (Serial.available() == 0) {}
+      dec = Serial.parseInt();
+      // Compare result
+      if (dec == 1) {
+          String choice;       
+          while (Serial.read() >= 0); // do nothing
+          Serial.println("Please select which user passcode to change (1-3) ");
+          while (Serial.available() == 0 ) {}
+          choice =  Serial.readStringUntil('\n'); // read string until meet newline character 
+          Serial.println(choice);
+          if (choice == "1"){
+            changePassword(1);
+          } else if (choice == "2"){
+            changePassword(2);
+          } else if (choice == "3"){
+            changePassword(3);
+          } else{
+            Serial.println("INCORRECT INPUT. Please select 1-3. ");
+          }
+      } else if (dec == 2) {
         Serial.println("Additional Sensor");
-        break;
-      case 3:
-        //function 3
+      } else if (dec == 3) {
         Serial.println("Finished Starting Up! Provide a Password...");
-        
         break;
-      default:
-        //something 
-        break;
-    }
-  
-    lastChange = millis();
+      }
   }
 
+  // End menu and enter loop
+  lastChange = millis();
+}
