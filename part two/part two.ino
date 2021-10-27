@@ -203,6 +203,11 @@ void readFromEEPROM(int p, char* c, int length)
   }
 }
 
+/* 
+  Password change based on which user to change, takes in 9 alphanumeric digits and applies to the 
+  respected EEPROM position to WRITE
+*/
+
 void changePassword(int pos) {
   String message; //string from serial 
   int msg_len ;    //total length of string
