@@ -279,8 +279,14 @@ void menu() {
           }
       } else if (dec == 2) {
         Serial.println("Temp must be 35.0 deg");
-        isCorrectTemp(35);
+        bool temp = isCorrectTemp(35);
+        if (temp = true){
         Serial.println("Temp is correct!");
+        EEPROM.write(100, 1); // if the temp sensor returns true, 
+        //write 1 into EEPROM address 100 to indicate it has been satisfied
+        }else{
+          EEPROM.write(100, 0); // else write 0 into EEPROM to indicate it has not been satisfied.
+        }
       } else if (dec == 3) {
         Serial.println("Finished Starting Up! Provide a Password...");
         break;
@@ -294,8 +300,8 @@ void menu() {
 /*
   Function for temp checking
 */
-void isCorrectTemp(int temp) {
-
+bool isCorrectTemp(int temp) { 
+// BOOL to confirm if temp has been met, to then write into EEPROM
   int ambient = 0.0;
 
   while (ambient != temp) {
@@ -304,4 +310,6 @@ void isCorrectTemp(int temp) {
     float celcius = 1 / (log(1 / (1023. / analogValue - 1)) / BETA + 1.0 / 298.15) - 273.15;
     ambient = (int) celcius;
   }
+  return true;
 }
+
