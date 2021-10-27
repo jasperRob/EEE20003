@@ -224,7 +224,7 @@ void changePassword(int pos) {
 /* 
   Main menu function from serial monitor to select the 3 option choices 
 */
-void menu(){ 
+void menu() { 
    
    // variables
    String defltpword;
@@ -277,7 +277,9 @@ void menu(){
             Serial.println("INCORRECT INPUT. Please select 1-3. ");
           }
       } else if (dec == 2) {
-        Serial.println("Additional Sensor");
+        Serial.println("Temp must be 35.0 deg");
+        isCorrectTemp(35);
+        Serial.println("Temp is correct!");
       } else if (dec == 3) {
         Serial.println("Finished Starting Up! Provide a Password...");
         break;
@@ -286,4 +288,19 @@ void menu(){
 
   // End menu and enter loop
   lastChange = millis();
+}
+
+/*
+  Function for temp checking
+*/
+void isCorrectTemp(int temp) {
+
+  int ambient = 0.0;
+
+  while (ambient != temp) {
+    const float BETA = 3950;
+    int analogValue = analogRead(A0);
+    float celcius = 1 / (log(1 / (1023. / analogValue - 1)) / BETA + 1.0 / 298.15) - 273.15;
+    ambient = (int) celcius;
+  }
 }
