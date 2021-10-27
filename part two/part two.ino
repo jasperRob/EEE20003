@@ -58,30 +58,31 @@ void setup() {
 
 void loop() {
 
-  char c = (char) (hover + 48);
-
-  // Increment hover var
-  if (millis() - lastChange > 5000){
-    lastChange = millis();
-
-    char c = (char) (hover + 48);
-    Serial.println(c);
-    // print entry
-    if (counter < 9) {
-      entry[counter] = c;
-      counter++;
-    }
-
-    // Reset hover var
-    hover = 0;
-  }
-
-  // Clear Display
-  display.clearDisplay();
-  display.setCursor(0,0);
-
   // Only add to entry if active
   if (active) {
+
+    // Clear Display
+    display.clearDisplay();
+    display.setCursor(0,0);
+
+
+    char c = (char) (hover + 48);
+
+    // Increment hover var
+    if (millis() - lastChange > 5000){
+      lastChange = millis();
+
+      char c = (char) (hover + 48);
+      Serial.println(c);
+      // print entry
+      if (counter < 9) {
+        entry[counter] = c;
+        counter++;
+      }
+
+      // Reset hover var
+      hover = 0;
+    }
 
     if (entry[8] != NULL) {
 
@@ -96,7 +97,7 @@ void loop() {
         if (isEqual(entry, pw, 9)) {
           active = false;
           granted = true;
-          msg = "Welcome Person!";
+          msg = "Welcome User!";
         }
       }
 
@@ -116,34 +117,34 @@ void loop() {
       }
       Serial.println(msg);
     }
+    // Print Text
+    display.setCursor(1, 1);
+    display.print("Updating in : ");
+    int timeLeft = ((5000 - (millis() - lastChange)) / 1000) + 1;
+    display.print(timeLeft);
+    // Print Current entry
+    display.setCursor(1, 14);
+    display.print(entry);
+    display.print(c);
+    // Print Message
+    display.setCursor(1, 28);
+    display.print(msg);
+    // Draw Cross if Denied
+    if (denied) {
+      display.drawLine(96, 32, 120, 8, WHITE);
+      display.drawLine(120, 32, 96, 8, WHITE);
+    }
+    // Draw Tick if Granted
+    if (granted) {
+      display.drawLine(96, 23, 105, 30, WHITE);
+      display.drawLine(105, 30, 120, 6, WHITE);
+    }
+    // Send to Display
+    yield();
+    display.display();
+    // Delay 10 millis
+    delay(10);
   }
-  // Print Text
-  display.setCursor(1, 1);
-  display.print("Updating in : ");
-  int timeLeft = ((5000 - (millis() - lastChange)) / 1000) + 1;
-  display.print(timeLeft);
-  // Print Current entry
-  display.setCursor(1, 14);
-  display.print(entry);
-  display.print(c);
-  // Print Message
-  display.setCursor(1, 28);
-  display.print(msg);
-  // Draw Cross if Denied
-  if (denied) {
-    display.drawLine(96, 32, 120, 8, WHITE);
-    display.drawLine(120, 32, 96, 8, WHITE);
-  }
-  // Draw Tick if Granted
-  if (granted) {
-    display.drawLine(96, 23, 105, 30, WHITE);
-    display.drawLine(105, 30, 120, 6, WHITE);
-  }
-  // Send to Display
-  yield();
-  display.display();
-  // Delay 10 millis
-  delay(10);
 }
 
 void selectChar() {
