@@ -19,6 +19,14 @@
       "left": 200,
       "rotate": 90,
       "attrs": {}
+    },
+    {
+      "type": "wokwi-ntc-temperature-sensor",
+      "id": "ntc1",
+      "top": 270.56,
+      "left": -5.33,
+      "rotate": 270,
+      "attrs": {}
     }
   ],
   "connections": [
@@ -29,6 +37,9 @@
     [ "btn1:2.l", "mega:5V", "green", [ "h-18", "v-74", "h61" ] ],
     [ "btn1:1.r", "r1:2", "green", [ "v0" ] ],
     [ "r1:1", "mega:GND.3", "green", [ "h0" ] ],
-    [ "btn1:1.l", "mega:19", "green", [ "h-1.84", "v-206.59", "h164" ] ]
+    [ "btn1:1.l", "mega:19", "green", [ "h-1.84", "v-206.59", "h164" ] ],
+    [ "ntc1:GND", "mega:GND.2", "black", [ "v-33.33", "h122.55" ] ],
+    [ "ntc1:VCC", "mega:5V", "red", [ "v-41.97", "h105.17" ] ],
+    [ "ntc1:OUT", "mega:A0", "green", [ "v-41.1", "h140.38" ] ]
   ]
 }
